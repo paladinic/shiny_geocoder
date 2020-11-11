@@ -16,6 +16,9 @@ ui <- fluidPage(
         placeholder = "Insert a valid address..."
       ),
       actionButton(inputId = "geocode", label = "Geocode"),
+      hr(),
+      tags$a(href = "https://github.com/paladinic/shiny_geocoder","Code"),
+      hr(),
       tableOutput(outputId = "table")
     ),
     mainPanel(
@@ -43,7 +46,7 @@ server <- function(input, output, session) {
     map = leaflet() %>%
       addTiles(urlTemplate = "http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
     
-    if (is.null(coords)) {
+    if (is.null(coords) | any(is.na(coords)) ) {
       
       coords = geo_osm("london, uk")
       
